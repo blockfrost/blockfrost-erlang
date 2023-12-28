@@ -7,6 +7,7 @@
 
 -export([lookupConfig/0]).
 -export([test/1]).
+-export([testrr/0]).
 
 -include("blockfrost.hrl").
 
@@ -19,7 +20,7 @@
    .
 
 -spec parseNetwork(string())
-  -> {ok, network()} | {error, string()}.
+  -> {ok, network()} | {error, string(), string()}.
 parseNetwork(NetString) ->
   case NetString of
     "mainnet" -> {ok, mainnet};
@@ -57,6 +58,8 @@ renderURL(URL) ->
   ++ URL
   .
 
+-spec setup(string())
+  -> ok.
 setup(Project) ->
   StrippedProj = string:strip(Project),
   Token = string:reverse(string:slice(string:reverse(StrippedProj), 0, 32)),
@@ -79,6 +82,8 @@ lookupConfig() ->
       end
   end.
 
+-spec init()
+  -> ok.
 init() ->
   case ets:whereis(?MODULE) of
     undefined ->
@@ -88,20 +93,24 @@ init() ->
       ok
   end.
 
+-spec test(string())
+  -> {ok, jsx:json_term()} | error.
 test(Project) ->
   setup(Project),
   performRequest("").
 
-
+-spec performRequest(string())
+  -> {ok, jsx:json_term()} | error.
 performRequest(URL) ->
   performRequest(URL, get).
 
+-spec performRequest(string(), term())
+  -> {ok, jsx:json_term()} | error.
 performRequest(URL, Method) ->
   {ok, Token, _Net} = lookupConfig(),
   {ok, Ver} = application:get_key(blockfrost_erlang, vsn),
-  Headers = [
-             {project_id, Token},
-             {"User-agent", "blockfrost-erlang/" ++ Ver}
+  Headers = [ {<<"project_id">>, Token}
+            , {<<"User-agent">>, "blockfrost-erlang/" ++ Ver}
             ],
   Options = [],
   Payload = <<>>,
@@ -110,7 +119,7 @@ performRequest(URL, Method) ->
   case hackney:request(Method, FullURL, Headers, Payload, Options) of
     {ok, 200, _RespHeaders, ClientRef} ->
       {ok, Body} = hackney:body(ClientRef),
-      jsx:decode(Body);
+      {ok, jsx:decode(Body)};
     {ok, Err, _, ClientRef} ->
       {ok, Body} = hackney:body(ClientRef),
       ErrBody = jsx:decode(Body),
@@ -128,3 +137,9 @@ performRequest(URL, Method) ->
     _Else -> _Else
   end.
 
+% due to application:get_key(blockfrost_erlang, vsn)
+% which returns any()
+-dialyzer({[no_return], [performRequest/1, performRequest/2]}).
+
+testrr() ->
+  #testr{str="str", uni = 12, wtf = pls, tup = {1, "a"}}.
