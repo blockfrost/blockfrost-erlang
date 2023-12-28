@@ -3,9 +3,12 @@
 -export([init/0]).
 -export([setup/1]).
 -export_type([network/0]).
+-export_type([error/0]).
 
 -export([lookupConfig/0]).
 -export([test/1]).
+
+-include("blockfrost.hrl").
 
 -type network() ::
      mainnet
@@ -89,6 +92,7 @@ test(Project) ->
   setup(Project),
   performRequest("").
 
+
 performRequest(URL) ->
   performRequest(URL, get).
 
@@ -110,11 +114,16 @@ performRequest(URL, Method) ->
     {ok, Err, _, ClientRef} ->
       {ok, Body} = hackney:body(ClientRef),
       ErrBody = jsx:decode(Body),
+      ErrRec = #error
+                  { error = maps:get(<<"error">>, ErrBody, "")
+                  , message = maps:get(<<"message">>, ErrBody, "")
+                  , status_code = maps:get(<<"status_code">>, ErrBody, 200)
+                  },
       case Err of
         429 ->
           timer:sleep(timer:minutes(5)),
           performRequest(URL);
-        _Else -> {error, ErrBody}
+        _Else -> {error, ErrRec}
       end;
     _Else -> _Else
   end.
