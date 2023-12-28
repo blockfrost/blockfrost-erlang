@@ -1,0 +1,17 @@
+{application, blockfrost_erlang,
+ [{description, "Blockfrost API client"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {blockfrost_erlang_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    hackney,
+    jsx
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {licenses, ["Apache-2.0"]},
+  {links, []}
+ ]}.
