@@ -10,8 +10,10 @@
     jsx
    ]},
   {env,[]},
-  {modules, []},
+  {modules, [
+    blockfrost
+  ]},
 
   {licenses, ["Apache-2.0"]},
-  {links, []}
+  {links, [{"GitHub", "https://github.com/blockfrost/blockfrost-erlang"}]}
  ]}.
