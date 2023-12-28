@@ -123,7 +123,7 @@ performRequest(URL, Method) ->
         429 ->
           timer:sleep(timer:minutes(5)),
           performRequest(URL);
-        _Else -> {error, ErrRec}
+        _Else -> ErrRec
       end;
     _Else -> _Else
   end.
