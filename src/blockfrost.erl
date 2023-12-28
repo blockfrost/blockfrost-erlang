@@ -90,8 +90,10 @@ test(Project) ->
   performRequest("").
 
 performRequest(URL) ->
+  performRequest(URL, get).
+
+performRequest(URL, Method) ->
   {ok, Token, _Net} = lookupConfig(),
-  Method = get,
   {ok, Ver} = application:get_key(blockfrost_erlang, vsn),
   Headers = [
              {project_id, Token},
