@@ -1,6 +1,7 @@
 -module(blockfrost_core).
 
 -export([init/0]).
+-export([setup/0]).
 -export([setup/1]).
 -export([performRequest/1]).
 -export([performRequest/2]).
@@ -13,7 +14,7 @@
 -include("blockfrost_core.hrl").
 
 -spec parseNetwork(string())
-  -> {ok, network()} | {error, string(), string()}.
+  -> {ok, network()} | {error, string()}.
 parseNetwork(NetString) ->
   case NetString of
     "mainnet" -> {ok, mainnet};
@@ -21,7 +22,7 @@ parseNetwork(NetString) ->
     "preview" -> {ok, preview};
     "sanchonet" -> {ok, sanchonet};
     "ipfs" -> {ok, ipfs};
-    _Else -> {error, "No such network", NetString}
+    _Else -> {error, "No such network " ++ NetString}
   end.
 
 -spec renderNetwork(network())
@@ -51,8 +52,24 @@ renderURL(Path, QS) ->
 
   hackney_url:make_url(list_to_binary(BaseURL), list_to_binary(P), QS).
 
+
+-spec setup()
+  -> ok | {error, string()}.
+setup() ->
+  case os:getenv("BLOCKFROST_TOKEN_PATH") of
+    false -> {error, "Set BLOCKFROST_TOKEN_PATH to point to a file with token"};
+    File -> case file:read_file(File) of
+              {ok, Binary} -> setup
+                                ( binary:bin_to_list
+                                  ( binary:replace(Binary, <<"\n">>, <<"">>)
+                                  )
+                                );
+              _Else -> _Else
+            end
+  end.
+
 -spec setup(string())
-  -> ok.
+  -> ok | {error, string()}.
 setup(Project) ->
   StrippedProj = string:strip(Project),
   Token = string:reverse(string:slice(string:reverse(StrippedProj), 0, 32)),
