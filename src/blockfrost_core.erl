@@ -6,6 +6,7 @@
 -export([performRequest/1]).
 -export([performRequest/2]).
 -export([performRequest/4]).
+-export([all_pages/1]).
 -export_type([network/0]).
 -export_type([error/0]).
 -export_type([paged/0]).
@@ -157,3 +158,23 @@ performRequest(URL, QS, Method, Payload) ->
           , performRequest/4
           ]}).
 
+% @doc Query all results, until we get less than maximum items per page.
+% Usage: blockfrost:all_pages(fun(P) -> blockfrost:get_latest_block_txs(P, #sort_order{}) end).
+-spec all_pages(fun((paged()) -> any()))
+  -> {ok, any()} | error.
+all_pages(F) ->
+  all_pages(F, #paged{}).
+
+-spec all_pages(fun((paged()) -> any()), paged())
+  -> {ok, any()} | error.
+all_pages(F, Page) ->
+  case F(Page) of
+    {ok, Results} when length(Results) < ?max_page_size ->
+      {ok, Results};
+    {ok, Results} ->
+      case all_pages(F, Page#paged{page_number = Page#paged.page_number + 1}) of
+        {ok, Next} -> {ok, Results ++ Next};
+        _Else -> _Else
+      end;
+    _Else -> _Else
+  end.
