@@ -12,6 +12,13 @@ pkgs.stdenv.mkDerivation {
     echo ""
     echo "## Build with"
     echo "rebar3 compile"
+
+    export ERL_AFLAGS="+pc unicode -kernel shell_history enabled -enable-feature all"
+    echo "## Shell"
+    echo "rebar3 shell"
+
+    echo "## Dialyzer"
+    echo "rebar3 dialyzer"
   '';
 }
 
