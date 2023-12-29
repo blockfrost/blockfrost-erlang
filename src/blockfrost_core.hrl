@@ -13,6 +13,8 @@
 
 -type paged() :: #paged{}.
 
+-define(max_page_size, 100).
+
 -type sort_order() :: asc | desc.
 
 -define(domain, "blockfrost.io").
