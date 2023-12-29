@@ -12,14 +12,6 @@
 
 -include("blockfrost_core.hrl").
 
--type network() ::
-     mainnet
-   | preprod
-   | preview
-   | sanchonet
-   | ipfs
-   .
-
 -spec parseNetwork(string())
   -> {ok, network()} | {error, string(), string()}.
 parseNetwork(NetString) ->

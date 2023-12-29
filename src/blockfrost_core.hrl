@@ -1,3 +1,11 @@
+-type network() ::
+     mainnet
+   | preprod
+   | preview
+   | sanchonet
+   | ipfs
+   .
+
 -record(error, {
   error :: string(),
   message :: string(),
