@@ -43,8 +43,6 @@ renderNetwork(NetString) ->
     ipfs -> "ipfs"
   end.
 
--define(domain, "blockfrost.io").
-
 -spec renderURL(string(), hackney:qs_vals())
   -> binary().
 renderURL(Path, QS) ->

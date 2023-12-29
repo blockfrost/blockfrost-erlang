@@ -15,6 +15,8 @@
 
 -type sort_order() :: asc | desc.
 
+-define(domain, "blockfrost.io").
+
 -ifdef(debug).
 -define(LOG(X), io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X])).
 -else.
