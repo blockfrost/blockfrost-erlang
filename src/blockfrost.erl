@@ -2,6 +2,8 @@
 
 -export([init/0]).
 -export([setup/1]).
+-export([performRequest/1]).
+-export([performRequest/3]).
 -export_type([network/0]).
 -export_type([error/0]).
 
@@ -102,18 +104,17 @@ test(Project) ->
 -spec performRequest(string())
   -> {ok, jsx:json_term()} | error.
 performRequest(URL) ->
-  performRequest(URL, get).
+  performRequest(URL, get, <<>>).
 
--spec performRequest(string(), term())
+-spec performRequest(string(), term(), term())
   -> {ok, jsx:json_term()} | error.
-performRequest(URL, Method) ->
+performRequest(URL, Method, Payload) ->
   {ok, Token, _Net} = lookupConfig(),
   {ok, Ver} = application:get_key(blockfrost_erlang, vsn),
   Headers = [ {<<"project_id">>, Token}
             , {<<"User-agent">>, "blockfrost-erlang/" ++ Ver}
             ],
   Options = [],
-  Payload = <<>>,
   FullURL = renderURL(URL),
 
   case hackney:request(Method, FullURL, Headers, Payload, Options) of
