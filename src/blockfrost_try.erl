@@ -10,7 +10,7 @@
   -> {ok, jsx:json_term()} | error.
 test(Project) ->
   blockfrost:setup(Project),
-  blockfrost:performRequest("").
+  blockfrost:performRequest("/").
 
 testrr() ->
   #testr{str="str", uni = 12, wtf = pls, tup = {1, "a"}}.

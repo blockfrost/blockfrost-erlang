@@ -3,11 +3,10 @@
 -export([init/0]).
 -export([setup/1]).
 -export([performRequest/1]).
--export([performRequest/3]).
+-export([performRequest/2]).
+-export([performRequest/4]).
 -export_type([network/0]).
 -export_type([error/0]).
-
--export([lookupConfig/0]).
 
 -include("blockfrost.hrl").
 
@@ -44,19 +43,21 @@ renderNetwork(NetString) ->
 
 -define(domain, "blockfrost.io").
 
--spec renderURL(string())
-  -> string().
-renderURL(URL) ->
-  "https://" ++
-  case lookupConfig() of
-    {ok, _Token, Net} -> renderNetwork(Net);
-    _Else -> _Else
-  end
-  ++ "."
-  ++ ?domain
-  ++ "/api/v0/"
-  ++ URL
-  .
+-spec renderURL(string(), hackney:qs_vals())
+  -> binary().
+renderURL(Path, QS) ->
+  BaseURL =
+    "https://" ++
+    case lookupConfig() of
+      {ok, _Token, Net} -> renderNetwork(Net);
+      _Else -> _Else
+    end
+    ++ "."
+    ++ ?domain,
+
+  P = "/api/v0/" ++ Path,
+
+  hackney_url:make_url(list_to_binary(BaseURL), list_to_binary(P), QS).
 
 -spec setup(string())
   -> ok.
@@ -93,21 +94,28 @@ init() ->
       ok
   end.
 
+
 -spec performRequest(string())
   -> {ok, jsx:json_term()} | error.
 performRequest(URL) ->
-  performRequest(URL, get, <<>>).
+  performRequest(URL, []).
 
--spec performRequest(string(), term(), term())
+-spec performRequest(string(), hackney_url:qs_vals())
   -> {ok, jsx:json_term()} | error.
-performRequest(URL, Method, Payload) ->
+performRequest(URL, QS) ->
+  performRequest(URL, QS, get, <<>>).
+
+-spec performRequest(string(), hackney_url:qs_vals(), term(), term())
+  -> {ok, jsx:json_term()} | error.
+performRequest(URL, QS, Method, Payload) ->
   {ok, Token, _Net} = lookupConfig(),
   {ok, Ver} = application:get_key(blockfrost_erlang, vsn),
   Headers = [ {<<"project_id">>, Token}
             , {<<"User-agent">>, "blockfrost-erlang/" ++ Ver}
             ],
   Options = [],
-  FullURL = renderURL(URL),
+  FullURL = renderURL(URL, QS),
+  ?LOG({performReq, FullURL}),
 
   case hackney:request(Method, FullURL, Headers, Payload, Options) of
     {ok, 200, _RespHeaders, ClientRef} ->
@@ -115,6 +123,7 @@ performRequest(URL, Method, Payload) ->
       {ok, jsx:decode(Body)};
     {ok, Err, _, ClientRef} ->
       {ok, Body} = hackney:body(ClientRef),
+      ?LOG({gotError, Body}),
       ErrBody = jsx:decode(Body),
       ErrRec = #error
                   { error = maps:get(<<"error">>, ErrBody, "")
@@ -123,6 +132,7 @@ performRequest(URL, Method, Payload) ->
                   },
       case Err of
         429 ->
+          ?LOG({rateLimited}),
           timer:sleep(timer:minutes(5)),
           performRequest(URL);
         _Else -> ErrRec
@@ -132,4 +142,9 @@ performRequest(URL, Method, Payload) ->
 
 % due to application:get_key(blockfrost_erlang, vsn)
 % which returns any()
--dialyzer({[no_return], [performRequest/1, performRequest/3]}).
+-dialyzer({[no_return],
+          [ performRequest/1
+          , performRequest/2
+          , performRequest/4
+          ]}).
+
