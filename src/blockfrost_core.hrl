@@ -6,6 +6,15 @@
 
 -type error() :: #error{}.
 
+-record(paged, {
+  count_per_page = 100 :: integer(),
+  page_number = 1 :: integer()
+}).
+
+-type paged() :: #paged{}.
+
+-type sort_order() :: asc | desc.
+
 -ifdef(debug).
 -define(LOG(X), io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X])).
 -else.

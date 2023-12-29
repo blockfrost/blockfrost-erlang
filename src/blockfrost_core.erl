@@ -7,6 +7,8 @@
 -export([performRequest/4]).
 -export_type([network/0]).
 -export_type([error/0]).
+-export_type([paged/0]).
+-export_type([sort_order/0]).
 
 -include("blockfrost_core.hrl").
 
