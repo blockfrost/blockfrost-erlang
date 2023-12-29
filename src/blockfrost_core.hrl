@@ -23,7 +23,11 @@
 
 -define(max_page_size, 100).
 
--type sort_order() :: asc | desc.
+-record(sort_order, {
+  sort_order = asc :: asc | desc
+}).
+
+-type sort_order() :: #sort_order{}.
 
 -define(domain, "blockfrost.io").
 

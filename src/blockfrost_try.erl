@@ -26,6 +26,6 @@ testpartial() ->
 get_latest_block_txs(Paged, SortOrder) ->
   QS = [ { <<"count">>, Paged#paged.count_per_page }
        , { <<"page">>, Paged#paged.page_number }
-       , { <<"order">>, SortOrder }
+       , { <<"order">>, SortOrder#sort_order.sort_order }
        ],
   blockfrost_core:performRequest("/blocks/latest/txs", QS).
