@@ -11,7 +11,7 @@
    ]},
   {env,[]},
   {modules, [
-    blockfrost
+    blockfrost_core
   ]},
 
   {licenses, ["Apache-2.0"]},

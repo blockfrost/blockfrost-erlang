@@ -9,8 +9,8 @@
 -spec test(string())
   -> {ok, jsx:json_term()} | error.
 test(Project) ->
-  blockfrost:setup(Project),
-  blockfrost:performRequest("/").
+  blockfrost_core:setup(Project),
+  blockfrost_core:performRequest("/").
 
 testrr() ->
   #testr{str="str", uni = 12, wtf = pls, tup = {1, "a"}}.

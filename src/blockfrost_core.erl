@@ -1,4 +1,4 @@
--module(blockfrost).
+-module(blockfrost_core).
 
 -export([init/0]).
 -export([setup/1]).
@@ -8,7 +8,7 @@
 -export_type([network/0]).
 -export_type([error/0]).
 
--include("blockfrost.hrl").
+-include("blockfrost_core.hrl").
 
 -type network() ::
      mainnet
