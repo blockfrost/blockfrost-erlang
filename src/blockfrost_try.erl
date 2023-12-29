@@ -3,8 +3,10 @@
 -export([test/1]).
 -export([testrr/0]).
 -export([testpartial/0]).
+-export([get_latest_block_txs/2]).
 
--include("blockfrost-try.hrl").
+-include("blockfrost_core.hrl").
+-include("blockfrost_try.hrl").
 
 -spec test(string())
   -> {ok, jsx:json_term()} | error.
@@ -20,3 +22,10 @@ add(A, B) -> A + B.
 testpartial() ->
   Increment = fun(X) -> add(1, X) end,
   Increment(100).
+
+get_latest_block_txs(Paged, SortOrder) ->
+  QS = [ { <<"count">>, Paged#paged.count_per_page }
+       , { <<"page">>, Paged#paged.page_number }
+       , { <<"order">>, SortOrder }
+       ],
+  blockfrost_core:performRequest("/blocks/latest/txs", QS).
