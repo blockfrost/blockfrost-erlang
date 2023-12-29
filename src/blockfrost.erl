@@ -8,8 +8,6 @@
 -export_type([error/0]).
 
 -export([lookupConfig/0]).
--export([test/1]).
--export([testrr/0]).
 
 -include("blockfrost.hrl").
 
@@ -95,12 +93,6 @@ init() ->
       ok
   end.
 
--spec test(string())
-  -> {ok, jsx:json_term()} | error.
-test(Project) ->
-  setup(Project),
-  performRequest("").
-
 -spec performRequest(string())
   -> {ok, jsx:json_term()} | error.
 performRequest(URL) ->
@@ -140,7 +132,4 @@ performRequest(URL, Method, Payload) ->
 
 % due to application:get_key(blockfrost_erlang, vsn)
 % which returns any()
--dialyzer({[no_return], [performRequest/1, performRequest/2]}).
-
-testrr() ->
-  #testr{str="str", uni = 12, wtf = pls, tup = {1, "a"}}.
+-dialyzer({[no_return], [performRequest/1, performRequest/3]}).
