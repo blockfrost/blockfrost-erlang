@@ -3,9 +3,9 @@
 -export([init/0]).
 -export([setup/0]).
 -export([setup/1]).
--export([performRequest/1]).
--export([performRequest/2]).
--export([performRequest/4]).
+-export([perform_request/1]).
+-export([perform_request/2]).
+-export([perform_request/4]).
 -export([all_pages/1]).
 -export_type([network/0]).
 -export_type([error/0]).
@@ -108,19 +108,19 @@ init() ->
   end.
 
 
--spec performRequest(string())
+-spec perform_request(string())
   -> {ok, jsx:json_term()} | error.
-performRequest(URL) ->
-  performRequest(URL, []).
+perform_request(URL) ->
+  perform_request(URL, []).
 
--spec performRequest(string(), hackney_url:qs_vals())
+-spec perform_request(string(), hackney_url:qs_vals())
   -> {ok, jsx:json_term()} | error.
-performRequest(URL, QS) ->
-  performRequest(URL, QS, get, <<>>).
+perform_request(URL, QS) ->
+  perform_request(URL, QS, get, <<>>).
 
--spec performRequest(string(), hackney_url:qs_vals(), term(), term())
+-spec perform_request(string(), hackney_url:qs_vals(), term(), term())
   -> {ok, jsx:json_term()} | error.
-performRequest(URL, QS, Method, Payload) ->
+perform_request(URL, QS, Method, Payload) ->
   {ok, Token, _Net} = lookupConfig(),
   {ok, Ver} = application:get_key(blockfrost_erlang, vsn),
   Headers = [ {<<"project_id">>, Token}
@@ -147,7 +147,7 @@ performRequest(URL, QS, Method, Payload) ->
         429 ->
           ?LOG({rateLimited}),
           timer:sleep(timer:minutes(5)),
-          performRequest(URL);
+          perform_request(URL);
         _Else -> ErrRec
       end;
     _Else -> _Else
@@ -156,9 +156,9 @@ performRequest(URL, QS, Method, Payload) ->
 % due to application:get_key(blockfrost_erlang, vsn)
 % which returns any()
 -dialyzer({[no_return],
-          [ performRequest/1
-          , performRequest/2
-          , performRequest/4
+          [ perform_request/1
+          , perform_request/2
+          , perform_request/4
           ]}).
 
 % @doc Query all results, until we get less than maximum items per page.

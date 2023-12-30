@@ -13,7 +13,7 @@
   -> {ok, jsx:json_term()} | error.
 test(Project) ->
   blockfrost_core:setup(Project),
-  blockfrost_core:performRequest("/").
+  blockfrost_core:perform_request("/").
 
 testrr() ->
   #testr{str="str", uni = 12, wtf = pls, tup = {1, "a"}}.
@@ -32,4 +32,4 @@ get_latest_block_txs(Paged, SortOrder) ->
        , { <<"page">>, Paged#paged.page_number }
        , { <<"order">>, SortOrder#sort_order.sort_order }
        ],
-  blockfrost_core:performRequest("/blocks/latest/txs", QS).
+  blockfrost_core:perform_request("/blocks/latest/txs", QS).
