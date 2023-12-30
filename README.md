@@ -31,7 +31,9 @@ To use this SDK, you first need to log in to [blockfrost.io](https://blockfrost.
 
 ## Installation
 
-The SDK uses [rebar3](http://rebar3.org).
+The SDK uses [rebar3](http://rebar3.org) for project management, [hackney](https://github.com/benoitc/hackney)
+as its HTTP client and [jsx](https://github.com/talentdeficit/jsx/) for `JSON`
+parsing.
 
 You can either work directly with this repository or add this package as a dependency of your project using
 
