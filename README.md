@@ -85,6 +85,9 @@ Simple `IPFS` upload example of a raw string:
 blockfrost:post_ipfs_add({multipart, [{<<"Filename">>, <<"Hello Erlang">>}]}).
 ```
 
+See [hackney](https://github.com/benoitc/hackney#send-a-body) documentation
+for more examples of `multipart` payload format.
+
 ## Maintenance
 
 ### Testing
