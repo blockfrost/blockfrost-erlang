@@ -75,6 +75,7 @@ setup() ->
 -spec setup(string())
   -> ok | {error, string()}.
 setup(Project) ->
+  application:ensure_all_started(hackney),
   StrippedProj = string:strip(Project),
   Token = string:reverse(string:slice(string:reverse(StrippedProj), 0, 32)),
   Env = string:reverse(string:slice(string:reverse(StrippedProj), 32, infinity)),
