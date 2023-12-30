@@ -53,7 +53,8 @@ renderURL(Path, QS) ->
 
   hackney_url:make_url(list_to_binary(BaseURL), list_to_binary(P), QS).
 
-
+% @doc Setup Blockfrost API client using BLOCKFROST_TOKEN_PATH
+% environment variable
 -spec setup()
   -> ok | {error, string()}.
 setup() ->
@@ -69,6 +70,8 @@ setup() ->
             end
   end.
 
+% @doc Setup Blockfrost API client from string
+% containing Blockfrost project token, i.e. `mainnet1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P'
 -spec setup(string())
   -> ok | {error, string()}.
 setup(Project) ->
