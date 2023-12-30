@@ -94,6 +94,10 @@ for more examples of `multipart` payload format.
 
 TODO
 
+### Typecheck
+
+Run `rebar3 dialyzer`
+
 ### Updating `rebar-deps.nix`
 
 Run `rebar3 nix lock`
