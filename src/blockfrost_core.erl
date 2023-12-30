@@ -123,7 +123,10 @@ perform_request(URL, QS) ->
   -> {ok, jsx:json_term()} | error.
 perform_request(URL, QS, Method, Payload) ->
   {ok, Token, _Net} = lookupConfig(),
-  {ok, Ver} = application:get_key(blockfrost_erlang, vsn),
+  Ver = case application:get_key(blockfrost_erlang, vsn) of
+          {ok, V} -> V;
+          _ -> "1.0.0" % due to tests
+        end,
   Headers = [ {<<"project_id">>, Token}
             , {<<"User-agent">>, "blockfrost-erlang/" ++ Ver}
             ],
