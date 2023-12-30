@@ -92,7 +92,16 @@ for more examples of `multipart` payload format.
 
 ### Testing
 
-TODO
+Export a token
+```sh
+export BLOCKFROST_TOKEN_PATH=~/.blockfrost.mainnet.token
+```
+
+and run
+
+```sh
+rebar3 eunit
+```
 
 ### Typecheck
 

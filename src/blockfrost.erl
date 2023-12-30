@@ -11,7 +11,7 @@
 -export_type([sort_order/0]).
 
 %% Health
--export([get/0]).
+-export([get_version/0]).
 -export([get_health/0]).
 -export([get_health_clock/0]).
 
@@ -167,9 +167,9 @@ all_pages(F) ->
 %% @doc Root endpoint
 %% Root endpoint has no other function than to point end users to documentation.
 %% Endpoint `/'
--spec get()
+-spec get_version()
     -> {ok, jsx:json_term()} | error.
-get() ->
+get_version() ->
   URL = io_lib:format("/", []),
   blockfrost_core:perform_request(URL).
 
