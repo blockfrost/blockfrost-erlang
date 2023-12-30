@@ -51,5 +51,8 @@ integration_test() ->
   {ok, _} = blockfrost:get_pools_retired(),
   {ok, _} = blockfrost:get_pools_retiring(),
 
-  {ok, _} = blockfrost:get_scripts().
+  {ok, _} = blockfrost:get_scripts(),
 
+  ok.
+
+-dialyzer({[no_return], [ integration_test/0 ]}).
