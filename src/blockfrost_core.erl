@@ -53,8 +53,8 @@ renderURL(Path, QS) ->
 
   hackney_url:make_url(list_to_binary(BaseURL), list_to_binary(P), QS).
 
-% @doc Setup Blockfrost API client using BLOCKFROST_TOKEN_PATH
-% environment variable
+%% @doc Setup Blockfrost API client using BLOCKFROST_TOKEN_PATH
+%% environment variable
 -spec setup()
   -> ok | {error, string()}.
 setup() ->
@@ -70,8 +70,8 @@ setup() ->
             end
   end.
 
-% @doc Setup Blockfrost API client from string
-% containing Blockfrost project token, i.e. `mainnet1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P'
+%% @doc Setup Blockfrost API client from string
+%% containing Blockfrost project token, i.e. `mainnet1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P'
 -spec setup(string())
   -> ok | {error, string()}.
 setup(Project) ->
@@ -165,8 +165,9 @@ perform_request(URL, QS, Method, Payload) ->
           , perform_request/4
           ]}).
 
-% @doc Query all results, until we get less than maximum items per page.
-% Usage: blockfrost:all_pages(fun(P) -> blockfrost:get_latest_block_txs(P, #sort_order{}) end).
+%% @doc Query all results, until we get less than maximum items per page.
+%%
+%% Usage: blockfrost:all_pages(fun(P) -> blockfrost:get_latest_block_txs(P, #sort_order{}) end).
 -spec all_pages(fun((paged()) -> any()))
   -> {ok, any()} | error.
 all_pages(F) ->
