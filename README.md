@@ -68,6 +68,11 @@ Then in `eshell`:
 ```erlang
 blockfrost:setup().
 blockfrost:get_blocks_latest().
+
+{ok, Block} = blockfrost:get_blocks_latest().
+Hash = maps:get(<<"hash">>, Block).
+TxCount = maps:get(<<"tx_count">>, Block).
+io:format("Block ~p tx count: ~p~n", [binary:bin_to_list(Hash), TxCount]).
 ```
 
 Otherwise you can use `setup/1` function
