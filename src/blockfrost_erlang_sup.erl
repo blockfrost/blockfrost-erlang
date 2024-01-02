@@ -26,6 +26,7 @@ start_link() ->
 %%                  type => worker(),       % optional
 %%                  modules => modules()}   % optional
 init([]) ->
+    blockfrost:setup(),
     SupFlags = #{strategy => one_for_all,
                  intensity => 0,
                  period => 1},
