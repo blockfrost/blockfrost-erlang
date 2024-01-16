@@ -1,3 +1,4 @@
+[![Hex pm](http://img.shields.io/hexpm/v/blockfrost_erlang.svg?style=flat)](https://hex.pm/packages/blockfrost_erlang)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/blockfrost/blockfrost-erlang/ci.yaml?branch=master)](https://github.com/blockfrost/blockfrost-erlang/actions/workflows/ci.yaml)
 [![Made by Five Binaries](https://img.shields.io/badge/made%20by-Five%20Binaries-darkviolet.svg?style=flat-square)](https://fivebinaries.com/)
 
