@@ -1,8 +1,5 @@
 {"1.2.0",
-[{<<"blockfrost_erlang">>,
-  {git,"https://github.com/blockfrost/blockfrost-erlang",
-       {ref,"d786915376f973c6859765eef5f87edfa92035bc"}},
-  0},
+[{<<"blockfrost_erlang">>,{pkg,<<"blockfrost_erlang">>,<<"0.1.0">>},0},
  {<<"certifi">>,{pkg,<<"certifi">>,<<"2.12.0">>},2},
  {<<"hackney">>,{pkg,<<"hackney">>,<<"1.19.1">>},1},
  {<<"idna">>,{pkg,<<"idna">>,<<"6.1.1">>},2},
@@ -14,6 +11,7 @@
  {<<"unicode_util_compat">>,{pkg,<<"unicode_util_compat">>,<<"0.7.0">>},2}]}.
 [
 {pkg_hash,[
+ {<<"blockfrost_erlang">>, <<"71C0CAA03AC0DE390D6DFF7CAD7F1AE3E1EFB546B993F768014FD7E125734CDC">>},
  {<<"certifi">>, <<"2D1CCA2EC95F59643862AF91F001478C9863C2AC9CB6E2F89780BFD8DE987329">>},
  {<<"hackney">>, <<"59DE4716E985DD2B5CBD4954FA1AE187E2B610A9C4520FFCB0B1653C3D6E5559">>},
  {<<"idna">>, <<"8A63070E9F7D0C62EB9D9FCB360A7DE382448200FBBD1B106CC96D3D8099DF8D">>},
@@ -24,6 +22,7 @@
  {<<"ssl_verify_fun">>, <<"354C321CF377240C7B8716899E182CE4890C5938111A1296ADD3EC74CF1715DF">>},
  {<<"unicode_util_compat">>, <<"BC84380C9AB48177092F43AC89E4DFA2C6D62B40B8BD132B1059ECC7232F9A78">>}]},
 {pkg_hash_ext,[
+ {<<"blockfrost_erlang">>, <<"2AC7F28A92518134596F84EB823095DE58238CCCA7279BD326650A2760FC6B9A">>},
  {<<"certifi">>, <<"EE68D85DF22E554040CDB4BE100F33873AC6051387BAF6A8F6CE82272340FF1C">>},
  {<<"hackney">>, <<"8AA08234BDEFC269995C63C2282CF3CD0E36FEBE3A6BFAB11B610572FDD1CAD0">>},
  {<<"idna">>, <<"92376EB7894412ED19AC475E4A86F7B413C1B9FBB5BD16DCCD57934157944CEA">>},
