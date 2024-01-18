@@ -1,5 +1,5 @@
 {"1.2.0",
-[{<<"blockfrost_erlang">>,{pkg,<<"blockfrost_erlang">>,<<"0.1.0">>},0},
+[{<<"blockfrost_erlang">>,{pkg,<<"blockfrost_erlang">>,<<"0.1.1">>},0},
  {<<"certifi">>,{pkg,<<"certifi">>,<<"2.12.0">>},2},
  {<<"hackney">>,{pkg,<<"hackney">>,<<"1.19.1">>},1},
  {<<"idna">>,{pkg,<<"idna">>,<<"6.1.1">>},2},
