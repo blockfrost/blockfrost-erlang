@@ -57,8 +57,8 @@ rebar3 shell
 ```
 
 If you export `BLOCKFROST_TOKEN_PATH` environment variable
-you can use `blockfrost:setup().` to automatically load
-it and configure network and token:
+`blockfrost-erlang` will automatically load
+and configure network and token:
 
 ```sh
 export BLOCKFROST_TOKEN_PATH=~/.blockfrost.mainnet.token
@@ -67,7 +67,6 @@ export BLOCKFROST_TOKEN_PATH=~/.blockfrost.mainnet.token
 Then in `eshell`:
 
 ```erlang
-blockfrost:setup().
 blockfrost:get_blocks_latest().
 
 {ok, Block} = blockfrost:get_blocks_latest().
@@ -76,7 +75,7 @@ TxCount = maps:get(<<"tx_count">>, Block).
 io:format("Block ~p tx count: ~p~n", [binary:bin_to_list(Hash), TxCount]).
 ```
 
-Otherwise you can use `setup/1` function
+Alternatively you can use `setup/1` function
 which accepts a project string, for example
 
 ```erlang

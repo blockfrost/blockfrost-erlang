@@ -2,7 +2,7 @@
 with pkgs.beamPackages;
 buildRebar3 {
   name = "blockfrost_erlang";
-  version = "0.1.0";
+  version = "0.1.1";
   src = ./.;
   profile = "prod";
   beamDeps = builtins.attrValues

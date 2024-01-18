@@ -1,6 +1,6 @@
 {application, blockfrost_erlang,
  [{description, "Blockfrost API client"},
-  {vsn, "0.1.0"},
+  {vsn, "0.1.1"},
   {registered, []},
   {mod, {blockfrost_erlang_app, []}},
   {applications,
