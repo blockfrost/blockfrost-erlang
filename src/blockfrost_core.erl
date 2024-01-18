@@ -102,7 +102,7 @@ lookupConfig() ->
 init() ->
   case ets:whereis(?MODULE) of
     undefined ->
-      _ = ets:new(?MODULE, [named_table, set]),
+      _ = ets:new(?MODULE, [named_table, set, public]),
       ok;
     _Else ->
       ok
